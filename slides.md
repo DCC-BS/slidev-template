@@ -1,6 +1,6 @@
 ---
 # You can also start simply with 'default'
-theme: default
+theme: ./theme
 fonts:
   # basically the text
   sans: Arial
@@ -12,27 +12,33 @@ fonts:
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 # open graph
 # seoMeta:
 #  ogImage: https://cover.sli.dev
-layout: Front
 ---
+
 This is a Test
 
 ---
-layout: Front2
+layout: intro
 ---
-Einsatz von Ki in Basel-Stadt
-
+# Einsatz von Ki in Basel-Stadt
+## Ein sub titel
 ::sub1::
 Data Competence Center - DCC
 ::sub2::
 Tobias Bollinger
 
+---
+---
+# Folie Agenda
+- Some bullets
+- More bullets
+- And even more bullets
 
+---
 ---
 # Welcome to Slidev
 
@@ -562,7 +568,7 @@ Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML D
 ---
 foo: bar
 dragPos:
-  square: 691,32,167,_,-16
+  square: 665,33,125,_,-20
 ---
 
 # Draggable Elements
@@ -588,7 +594,7 @@ Double-click on the draggable elements to edit their positions.
 </v-drag>
 ```
 
-<v-drag pos="663,206,261,_,-15">
+<v-drag pos="722,232,261,_,11">
   <div text-center text-3xl border border-main rounded>
     Double-click me!
   </div>
@@ -602,7 +608,7 @@ Double-click on the draggable elements to edit their positions.
 <v-drag-arrow two-way />
 ```
 
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
+<v-drag-arrow pos="157,486,205,9" two-way op70 />
 
 ---
 src: ./pages/imported-slides.md

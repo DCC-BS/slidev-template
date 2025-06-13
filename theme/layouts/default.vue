@@ -1,0 +1,28 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+interface InputProps {
+    showDataBSLogo?: boolean;
+}
+
+const props = withDefaults(defineProps<InputProps>(), {
+    showDataBSLogo: true,
+});
+
+</script>
+
+<template>
+    <div class="slidev-layout relative bg-white">
+        <div class="absolute right-0 right-1 bottom-20">
+            <img src="/image5.png" alt="Background Image" />
+        </div>
+
+        <div class="my-auto">
+            <slot />
+        </div>
+
+        <div v-if="props.showDataBSLogo" class="absolute bottom-10 right-10 z-10">
+            <img class="w-15" src="/DataBSLogo.svg">
+        </div>
+    </div>
+</template>

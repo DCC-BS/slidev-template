@@ -2,7 +2,7 @@
     <div class="wrapper flex justify-center items-center relative">
         <div class="top-5 left-5 absolute z-10 flex justify-center items-end gap-2">
             <img src="/BsStab.svg" alt="Logo" class="h-[50px]" />
-            <span class="logo-wrapper">Kanton Basel-Stadt</span>
+            <span class="logo-wrapper text-white">Kanton Basel-Stadt</span>
         </div>
 
         <div class="slot-wrapper mb-40 font-bold text-white z-10">
