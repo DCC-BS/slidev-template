@@ -14,11 +14,7 @@ drawings:
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
-# open graph
-# seoMeta:
-#  ogImage: https://cover.sli.dev
 ---
-
 # TextMate
 
 ---
