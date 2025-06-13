@@ -1,11 +1,11 @@
 <template>
   <div class="slidev-layout cover wrapper flex justify-center items-center relative">
     <div class="top-5 left-5 absolute z-10 flex justify-center items-end gap-2">
-      <img src="/BsStab.svg" alt="Logo" class="h-[50px]" />
+      <img src="/BsStab.svg" alt="Logo" class="h-[100px]" />
       <span class="logo-wrapper text-white">Kanton Basel-Stadt</span>
     </div>
 
-    <div class="slot-wrapper mb-40 font-bold text-white z-10 text-shadow-lg">
+    <div class="slot-wrapper mb-70 font-bold text-white z-10 text-shadow-lg">
       <slot />
     </div>
 
@@ -16,10 +16,6 @@
 </template>
 
 <style scoped>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .wrapper {
   width: 100%;
   height: 100%;
@@ -31,9 +27,6 @@ body {
 
 .logo-wrapper {
   font-weight: 800;
-}
-
-.slot-wrapper {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 </style>

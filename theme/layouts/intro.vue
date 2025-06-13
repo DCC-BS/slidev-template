@@ -9,7 +9,7 @@
       <slot />
     </div>
 
-    <div class="sub-wrapper absolute bottom-10 left-10 z-10">
+    <div class="sub-wrapper absolute bottom-10 left-10 z-10 flex flex-col items-start gap-4">
       <div class="text-white">
         <slot name="sub1" />
       </div>
@@ -38,7 +38,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.sub-wrapper {
-  font-size: 2rem;
+.sub-wrapper * {
+  font-size: 4rem
 }
 </style>

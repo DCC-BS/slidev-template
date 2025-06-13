@@ -5,12 +5,18 @@
 
 .slidev-page {
     color: black;
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .slidev-layout {
     h1+p {
         @apply -mt-2 opacity-50 mb-4;
+    }
+
+    p,
+    ul,
+    table {
+        font-size: 2rem;
     }
 
     p+h2,
@@ -20,7 +26,7 @@
     }
 
     h1 {
-        @apply text-4xl mb-4 -ml-[0.05em] text-cyan-600 font-bold;
+        @apply text-6xl mb-4 -ml-[0.05em] text-cyan-600 font-bold;
     }
 
     h2 {
@@ -53,11 +59,11 @@
     @apply h-full grid;
 
     h1 {
-        @apply text-5xl leading-20 text-white mb-0 font-bold;
+        @apply text-8xl leading-20 text-white mb-4 font-bold;
     }
 
     h2 {
-        @apply text-2xl text-gray-300 font-normal;
+        @apply text-5xl text-gray-300 font-normal;
     }
 }
 

@@ -9,6 +9,8 @@ fonts:
   # for code blocks, inline code, etc.
   mono: Fira Code
 
+canvasWidth: 1920
+
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
@@ -34,6 +36,15 @@ url: https://textmate.uvk8sbswc19.cmp.bs.ch
 # Was ist TextMate?
 - TextMate ist ein KI-gestützter Textassistent, der bei der Erstellung von Texten unterstützt.
 - Er hilft bei der Formulierung von Texten, der Verbesserung der Lesbarkeit und der Einhaltung von Stilrichtlinien.
+
+---
+---
+<KonvaTest />
+
+---
+---
+<InteractiveConnections />
+
 
 ---
 ---
