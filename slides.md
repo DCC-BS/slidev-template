@@ -1,19 +1,14 @@
 ---
 # You can also start simply with 'default'
-theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: Welcome to Slidev
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+theme: default
+fonts:
+  # basically the text
+  sans: Arial
+  # use with `font-serif` css class from UnoCSS
+  serif: Robot Slab
+  # for code blocks, inline code, etc.
+  mono: Fira Code
 
-  Learn more at [Sli.dev](https://sli.dev)
-# apply unocss classes to the current slide
-class: text-center
-# https://sli.dev/features/drawing
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
@@ -23,8 +18,22 @@ mdc: true
 # open graph
 # seoMeta:
 #  ogImage: https://cover.sli.dev
+layout: Front
 ---
+This is a Test
 
+---
+layout: Front2
+---
+Einsatz von Ki in Basel-Stadt
+
+::sub1::
+Data Competence Center - DCC
+::sub2::
+Tobias Bollinger
+
+
+---
 # Welcome to Slidev
 
 Presentation slides for developers
