@@ -5,7 +5,7 @@
       <img src="/image3.png" alt="Background Image" />
     </div>
 
-    <div class="mb-35 z-10">
+    <div class="mb-35 z-10 text-center">
       <slot />
     </div>
 

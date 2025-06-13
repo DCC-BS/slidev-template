@@ -19,24 +19,25 @@ mdc: true
 #  ogImage: https://cover.sli.dev
 ---
 
-This is a Test
+# TextMate
 
 ---
 layout: intro
 ---
-# Einsatz von Ki in Basel-Stadt
-## Ein sub titel
+# TextMate
+## KI-gestützter Textassistent
 ::sub1::
 Data Competence Center - DCC
 ::sub2::
 Tobias Bollinger
 
 ---
+layout: iframe-right
+url: https://textmate.uvk8sbswc19.cmp.bs.ch
 ---
-# Folie Agenda
-- Some bullets
-- More bullets
-- And even more bullets
+# Was ist TextMate?
+- TextMate ist ein KI-gestützter Textassistent, der bei der Erstellung von Texten unterstützt.
+- Er hilft bei der Formulierung von Texten, der Verbesserung der Lesbarkeit und der Einhaltung von Stilrichtlinien.
 
 ---
 ---
@@ -568,7 +569,7 @@ Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML D
 ---
 foo: bar
 dragPos:
-  square: 665,33,125,_,-20
+  square: 691,32,167,_,-16
 ---
 
 # Draggable Elements
