@@ -1,7 +1,11 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { useKonvaAnimation, createAnimationTarget, createAnimationStep } from '../composables/useKonvaAnimation';
-import Konva from 'konva';
+import Konva from "konva";
+import { computed, ref } from "vue";
+import {
+    createAnimationStep,
+    createAnimationTarget,
+    useKonvaAnimation,
+} from "../composables/useKonvaAnimation";
 
 export interface AnimationStep {
     targets: Array<{
@@ -24,7 +28,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     skipThreshold: 300,
-    defaultDuration: 1000
+    defaultDuration: 1000,
 });
 
 // Automatically capture initial states from targets at mount
@@ -33,30 +37,39 @@ const capturedInitialStates = ref<Record<string, any>[]>([]);
 // Function to capture all animatable properties from a target
 const captureInitialState = (target: any): Record<string, any> => {
     const state: Record<string, any> = {};
-    
+
     // Common properties that are typically animated
-    const commonProps = ['x', 'y', 'width', 'height', 'scaleX', 'scaleY', 'rotation', 'opacity'];
-    
+    const commonProps = [
+        "x",
+        "y",
+        "width",
+        "height",
+        "scaleX",
+        "scaleY",
+        "rotation",
+        "opacity",
+    ];
+
     // Capture common properties if they exist
-    commonProps.forEach(prop => {
+    commonProps.forEach((prop) => {
         if (target[prop] !== undefined) {
             state[prop] = target[prop];
         }
     });
-    
+
     // Also capture any properties that appear in animation steps for this target
     const targetIndex = props.targets.indexOf(target);
-    props.steps.forEach(step => {
-        const targetConfig = step.targets.find(t => t.index === targetIndex);
+    props.steps.forEach((step) => {
+        const targetConfig = step.targets.find((t) => t.index === targetIndex);
         if (targetConfig) {
-            Object.keys(targetConfig.properties).forEach(prop => {
+            Object.keys(targetConfig.properties).forEach((prop) => {
                 if (target[prop] !== undefined && state[prop] === undefined) {
                     state[prop] = target[prop];
                 }
             });
         }
     });
-    
+
     return state;
 };
 
@@ -66,23 +79,21 @@ if (!props.initialStates) {
 }
 
 // Use provided initial states or captured ones
-const effectiveInitialStates = props.initialStates || capturedInitialStates.value;
+const effectiveInitialStates =
+    props.initialStates || capturedInitialStates.value;
 
 // Convert the simplified format to our animation system format
 const animationTargets = props.targets.map((target, index) => {
-    const steps = props.steps.map(step => {
+    const steps = props.steps.map((step) => {
         // Find the configuration for this target in this step
-        const targetConfig = step.targets.find(t => t.index === index);
+        const targetConfig = step.targets.find((t) => t.index === index);
 
         if (targetConfig) {
-            return createAnimationStep(
-                targetConfig.properties,
-                {
-                    duration: targetConfig.duration,
-                    easing: targetConfig.easing,
-                    delay: targetConfig.delay
-                }
-            );
+            return createAnimationStep(targetConfig.properties, {
+                duration: targetConfig.duration,
+                easing: targetConfig.easing,
+                delay: targetConfig.delay,
+            });
         } else {
             // If no configuration for this step, keep current state
             return createAnimationStep({}, { duration: 100 });
@@ -92,7 +103,7 @@ const animationTargets = props.targets.map((target, index) => {
     return createAnimationTarget(
         target,
         effectiveInitialStates[index] || {},
-        steps
+        steps,
     );
 });
 
@@ -102,15 +113,15 @@ const { currentStep, totalSteps, isAnimating } = useKonvaAnimation(
     {
         skipThreshold: props.skipThreshold,
         defaultDuration: props.defaultDuration,
-        defaultEasing: Konva.Easings.EaseInOut
-    }
+        defaultEasing: Konva.Easings.EaseInOut,
+    },
 );
 
 // Expose values to parent component
 defineExpose({
     currentStep,
     totalSteps,
-    isAnimating
+    isAnimating,
 });
 </script>
 

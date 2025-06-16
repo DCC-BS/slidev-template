@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { BlockConfig } from './Block.vue';
-import Graphic from './Graphic.vue';
-import { ConnectionOptions } from '../utils/shapeConnector';
-import SimpleAnimator from './SimpleAnimator.vue';
+import { ref } from "vue";
+import type { ConnectionOptions } from "../utils/shapeConnector";
+import type { BlockConfig } from "./Block.vue";
+import Graphic from "./Graphic.vue";
+import SimpleAnimator from "./SimpleAnimator.vue";
 
 // Define reactive blocks
 const blocks = ref<BlockConfig[]>([
@@ -12,8 +12,8 @@ const blocks = ref<BlockConfig[]>([
         width: 150,
         x: 100,
         y: 100,
-        text: 'Test Block',
-    }
+        text: "Test Block",
+    },
 ]);
 
 const connections = ref<ConnectionOptions[]>([]);
@@ -26,9 +26,9 @@ const animationSteps = [
             {
                 index: 0, // blocks[0]
                 properties: { x: 300 },
-                duration: 1000
-            }
-        ]
+                duration: 1000,
+            },
+        ],
     },
     // Step 2: Move down and scale
     {
@@ -36,16 +36,14 @@ const animationSteps = [
             {
                 index: 0,
                 properties: { y: 200, width: 200 },
-                duration: 800
-            }
-        ]
-    }
+                duration: 800,
+            },
+        ],
+    },
 ];
 
 // Initial states for each target
-const initialStates = [
-    { x: 100, y: 100, width: 150, height: 100 }
-];
+const initialStates = [{ x: 100, y: 100, width: 150, height: 100 }];
 </script>
 
 <template>

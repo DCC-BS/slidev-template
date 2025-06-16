@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { BlockConfig } from './Block.vue';
-import Graphic from './Graphic.vue';
-import { ConnectionOptions } from '../utils/shapeConnector';
-import SimpleAnimator from './SimpleAnimator.vue';
-import Konva from 'konva';
+import Konva from "konva";
+import { ref } from "vue";
+import type { ConnectionOptions } from "../utils/shapeConnector";
+import type { BlockConfig } from "./Block.vue";
+import Graphic from "./Graphic.vue";
+import SimpleAnimator from "./SimpleAnimator.vue";
 
 // Define reactive blocks
 const blocks = ref<BlockConfig[]>([
@@ -13,32 +13,32 @@ const blocks = ref<BlockConfig[]>([
         width: 150,
         x: 100,
         y: 100,
-        text: 'Start',
+        text: "Start",
     },
     {
         height: 100,
         width: 150,
         x: 400,
         y: 100,
-        text: 'End',
-    }
+        text: "End",
+    },
 ]);
 
 const connections = ref<ConnectionOptions[]>([
     {
         fromShape: blocks.value[0],
         toShape: blocks.value[1],
-        fromAnchor: 'right',
-        toAnchor: 'left',
-        connectionType: 'straight',
-        lineType: 'arrow',
+        fromAnchor: "right",
+        toAnchor: "left",
+        connectionType: "straight",
+        lineType: "arrow",
         config: {
-            stroke: '#3b82f6',
+            stroke: "#3b82f6",
             strokeWidth: 3,
             pointerLength: 15,
-            pointerWidth: 12
-        }
-    }
+            pointerWidth: 12,
+        },
+    },
 ]);
 
 // Define animation steps using the simple format
@@ -50,9 +50,9 @@ const animationSteps = [
                 index: 0, // blocks[0]
                 properties: { x: 200, y: 150 },
                 duration: 1000,
-                easing: Konva.Easings.EaseOut
-            }
-        ]
+                easing: Konva.Easings.EaseOut,
+            },
+        ],
     },
     // Step 2: Scale both blocks
     {
@@ -61,16 +61,16 @@ const animationSteps = [
                 index: 0,
                 properties: { width: 200, height: 130 },
                 duration: 800,
-                easing: Konva.Easings.BackEaseOut
+                easing: Konva.Easings.BackEaseOut,
             },
             {
                 index: 1,
                 properties: { width: 200, height: 130, y: 150 },
                 duration: 800,
                 easing: Konva.Easings.BackEaseOut,
-                delay: 200
-            }
-        ]
+                delay: 200,
+            },
+        ],
     },
     // Step 3: Final positions
     {
@@ -79,17 +79,17 @@ const animationSteps = [
                 index: 0,
                 properties: { x: 150, y: 200 },
                 duration: 1200,
-                easing: Konva.Easings.ElasticEaseOut
+                easing: Konva.Easings.ElasticEaseOut,
             },
             {
                 index: 1,
                 properties: { x: 450, y: 200 },
                 duration: 1200,
                 easing: Konva.Easings.ElasticEaseOut,
-                delay: 100
-            }
-        ]
-    }
+                delay: 100,
+            },
+        ],
+    },
 ];
 
 // Initial states are now automatically captured from targets!

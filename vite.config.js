@@ -1,8 +1,6 @@
-import { defineConfig } from 'vite'
-import slidevClicks from 'slidev-clicks/vite-plugin'
+import slidevClicks from "slidev-clicks/vite-plugin";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [
-    slidevClicks()
-  ]
-})
+    plugins: [slidevClicks()],
+});

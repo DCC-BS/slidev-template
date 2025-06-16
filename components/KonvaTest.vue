@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import Konva from 'konva';
-import { ref, onMounted } from 'vue';
+import type Konva from "konva";
+import { onMounted, ref } from "vue";
 import {
+    type AnchorPoint,
+    type ConnectionType,
+    type LineType,
+    type Shape,
     createConnection,
     createSmartConnection,
     updateConnection,
-    type Shape,
-    type AnchorPoint,
-    type ConnectionType,
-    type LineType
-} from '../utils/shapeConnector';
+} from "../utils/shapeConnector";
 
 const stageConfig = {
     width: 1600,
@@ -36,66 +36,60 @@ onMounted(() => {
             createConnection({
                 fromShape: rect1,
                 toShape: rect2,
-                fromAnchor: 'right',
-                toAnchor: 'left',
-                connectionType: 'straight',
-                lineType: 'arrow',
+                fromAnchor: "right",
+                toAnchor: "left",
+                connectionType: "straight",
+                lineType: "arrow",
                 config: {
-                    stroke: 'red',
+                    stroke: "red",
                     strokeWidth: 3,
                     pointerLength: 15,
-                    pointerWidth: 12
-                }
+                    pointerWidth: 12,
+                },
             }),
 
             // Curved line from circle1 top to rect3 bottom
             createConnection({
                 fromShape: circle1,
                 toShape: rect3,
-                fromAnchor: 'top',
-                toAnchor: 'bottom',
-                connectionType: 'curved',
-                lineType: 'line',
+                fromAnchor: "top",
+                toAnchor: "bottom",
+                connectionType: "curved",
+                lineType: "line",
                 config: {
-                    stroke: 'blue',
+                    stroke: "blue",
                     strokeWidth: 2,
-                    tension: 0.5
-                }
+                    tension: 0.5,
+                },
             }),
 
             // Orthogonal double arrow from rect2 top to rect3 left
             createConnection({
                 fromShape: rect2,
                 toShape: rect3,
-                fromAnchor: 'top',
-                toAnchor: 'left',
-                connectionType: 'orthogonal',
-                lineType: 'double-arrow',
+                fromAnchor: "top",
+                toAnchor: "left",
+                connectionType: "orthogonal",
+                lineType: "double-arrow",
                 config: {
-                    stroke: 'green',
+                    stroke: "green",
                     strokeWidth: 2,
                     pointerLength: 10,
-                    pointerWidth: 8
-                }
+                    pointerWidth: 8,
+                },
             }),
 
             // Smart connection (automatically chooses best anchor points)
-            createSmartConnection(
-                rect1,
-                circle1,
-                'curved',
-                'arrow',
-                {
-                    stroke: 'purple',
-                    strokeWidth: 2,
-                    dash: [5, 5],
-                    tension: 0.3
-                }
-            )
+            createSmartConnection(rect1, circle1, "curved", "arrow", {
+                stroke: "purple",
+                strokeWidth: 2,
+                dash: [5, 5],
+                tension: 0.3,
+            }),
         ];
 
         // Add all connections to the layer
-        connections_list.forEach(connection => {
+        connections_list.forEach((connection) => {
             layer.add(connection);
             connections.value.push(connection);
         });
@@ -103,7 +97,6 @@ onMounted(() => {
         layer.draw();
     }
 });
-
 </script>
 
 <template>

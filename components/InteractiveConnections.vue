@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Konva from 'konva';
-import { ref, onMounted } from 'vue';
+import type Konva from "konva";
+import { onMounted, ref } from "vue";
 import {
+    type ConnectionOptions,
+    type Shape,
     createConnection,
     updateConnection,
-    type Shape,
-    type ConnectionOptions
-} from '../utils/shapeConnector';
+} from "../utils/shapeConnector";
 
 const stageConfig = {
     width: 800,
@@ -19,13 +19,15 @@ const stageRef = ref<any>(null);
 const shapes = ref({
     rect1: { x: 100, y: 100, width: 80, height: 60 },
     rect2: { x: 400, y: 300, width: 100, height: 80 },
-    circle1: { x: 200, y: 300, width: 80, height: 80 }
+    circle1: { x: 200, y: 300, width: 80, height: 80 },
 });
 
-const connections = ref<{
-    connection: any;
-    options: ConnectionOptions;
-}[]>([]);
+const connections = ref<
+    {
+        connection: any;
+        options: ConnectionOptions;
+    }[]
+>([]);
 
 onMounted(() => {
     if (stageRef.value) {
@@ -37,49 +39,49 @@ onMounted(() => {
             {
                 fromShape: shapes.value.rect1,
                 toShape: shapes.value.rect2,
-                fromAnchor: 'right',
-                toAnchor: 'left',
-                connectionType: 'orthogonal',
-                lineType: 'arrow',
+                fromAnchor: "right",
+                toAnchor: "left",
+                connectionType: "orthogonal",
+                lineType: "arrow",
                 config: {
-                    stroke: 'red',
+                    stroke: "red",
                     strokeWidth: 2,
                     pointerLength: 12,
-                    pointerWidth: 10
-                }
+                    pointerWidth: 10,
+                },
             },
             {
                 fromShape: shapes.value.circle1,
                 toShape: shapes.value.rect2,
-                fromAnchor: 'top',
-                toAnchor: 'bottom',
-                connectionType: 'curved',
-                lineType: 'double-arrow',
+                fromAnchor: "top",
+                toAnchor: "bottom",
+                connectionType: "curved",
+                lineType: "double-arrow",
                 config: {
-                    stroke: 'blue',
+                    stroke: "blue",
                     strokeWidth: 2,
                     tension: 0.4,
                     pointerLength: 10,
-                    pointerWidth: 8
-                }
+                    pointerWidth: 8,
+                },
             },
             {
                 fromShape: shapes.value.rect1,
                 toShape: shapes.value.circle1,
-                fromAnchor: 'bottom',
-                toAnchor: 'left',
-                connectionType: 'straight',
-                lineType: 'line',
+                fromAnchor: "bottom",
+                toAnchor: "left",
+                connectionType: "straight",
+                lineType: "line",
                 config: {
-                    stroke: 'green',
+                    stroke: "green",
                     strokeWidth: 2,
-                    dash: [10, 5]
-                }
-            }
+                    dash: [10, 5],
+                },
+            },
         ];
 
         // Create and store connections
-        connectionConfigs.forEach(options => {
+        connectionConfigs.forEach((options) => {
             const connection = createConnection(options);
             layer.add(connection);
             connections.value.push({ connection, options });
@@ -96,7 +98,7 @@ const updateConnections = () => {
         const updatedOptions = {
             ...options,
             fromShape: getShapeByRef(options.fromShape),
-            toShape: getShapeByRef(options.toShape)
+            toShape: getShapeByRef(options.toShape),
         };
         updateConnection(connection, updatedOptions);
     });
@@ -122,7 +124,6 @@ const handleDrag = (shapeKey: keyof typeof shapes.value, event: any) => {
     shapes.value[shapeKey].y = event.target.y();
     updateConnections();
 };
-
 </script>
 
 <template>

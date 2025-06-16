@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { BlockConfig } from './Block.vue';
-import Graphic from './Graphic.vue';
+import { ref } from "vue";
+import type { BlockConfig } from "./Block.vue";
+import Graphic from "./Graphic.vue";
 
 // Define a simple block for comparison
 const block = ref<BlockConfig>({
-  height: 100,
-  width: 150,
-  x: 100,
-  y: 150,
-  text: 'Demo Block',
+    height: 100,
+    width: 150,
+    x: 100,
+    y: 150,
+    text: "Demo Block",
 });
 </script>
 

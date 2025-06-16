@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { ConnectionOptions, createConnection } from '../utils/shapeConnector';
+import { computed } from "vue";
+import {
+    type ConnectionOptions,
+    createConnection,
+} from "../utils/shapeConnector";
 
 interface Props {
     config: ConnectionOptions;
@@ -8,7 +11,6 @@ interface Props {
 
 const props = defineProps<Props>();
 const config = computed(() => createConnection(props.config));
-
 </script>
 
 <template>

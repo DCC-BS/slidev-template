@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, shallowRef } from 'vue';
-import { useEasyAnimation, AnimationSequenceBuilder } from '../composables/useEasyAnimation';
+import { computed, onMounted, ref, shallowRef } from "vue";
+import {
+    type AnimationSequenceBuilder,
+    useEasyAnimation,
+} from "../composables/useEasyAnimation";
 
 // Props interface - much simpler now!
 interface Props {
@@ -13,14 +16,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     skipThreshold: 300,
     defaultDuration: 1000,
-    defaultEasing: 'easeInOut'
+    defaultEasing: "easeInOut",
 });
 
 // Create the easy animation system once
 const { createSequence, createAnimationFromSequence } = useEasyAnimation({
     skipThreshold: props.skipThreshold,
     defaultDuration: props.defaultDuration,
-    defaultEasing: props.defaultEasing
+    defaultEasing: props.defaultEasing,
 });
 
 // Use shallowRef for better performance since we don't need deep reactivity
@@ -75,9 +78,11 @@ onMounted(() => {
             const newTotalSteps = system.totalSteps.value;
             const newIsAnimating = system.isAnimating.value;
 
-            if (newCurrentStep !== currentStep.value ||
+            if (
+                newCurrentStep !== currentStep.value ||
                 newTotalSteps !== totalSteps.value ||
-                newIsAnimating !== isAnimating.value) {
+                newIsAnimating !== isAnimating.value
+            ) {
                 scheduleUpdate();
             }
         }, 50); // Check every 50ms instead of every frame
@@ -93,7 +98,7 @@ onMounted(() => {
 defineExpose({
     currentStep: computed(() => currentStep.value),
     totalSteps: computed(() => totalSteps.value),
-    isAnimating: computed(() => isAnimating.value)
+    isAnimating: computed(() => isAnimating.value),
 });
 </script>
 

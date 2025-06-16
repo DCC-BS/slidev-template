@@ -6,7 +6,6 @@ interface InputProps {
 const props = withDefaults(defineProps<InputProps>(), {
     showDataBSLogo: true,
 });
-
 </script>
 
 <template>
