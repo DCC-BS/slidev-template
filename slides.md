@@ -39,12 +39,13 @@ url: https://textmate.uvk8sbswc19.cmp.bs.ch
 
 ---
 ---
-<KonvaTest />
+<TextMateArchitecture />
 
 ---
 ---
-<InteractiveConnections />
+# Simple Animation Test
 
+<SimpleAnimationExample />
 
 ---
 ---

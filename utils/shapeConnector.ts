@@ -4,6 +4,7 @@ export type AnchorPoint = 'left' | 'right' | 'top' | 'bottom' | 'center';
 export type ConnectionType = 'straight' | 'curved' | 'orthogonal';
 export type LineType = 'line' | 'arrow' | 'double-arrow';
 
+
 export interface Shape {
   x: number;
   y: number;
@@ -111,7 +112,7 @@ function getOrthogonalPoints(
 /**
  * Create a connection between two shapes
  */
-export function createConnection(options: ConnectionOptions): any {
+export function createConnection(options: ConnectionOptions): Konva.LineConfig | Konva.ArrowConfig {
   const {
     fromShape,
     toShape,
@@ -163,30 +164,31 @@ export function createConnection(options: ConnectionOptions): any {
 
   switch (lineType) {
     case 'line':
-      return new Konva.Line(baseConfig);
+      // return new Konva.Line(baseConfig);
+      return baseConfig;
     
     case 'arrow':
-      return new Konva.Arrow({
+      return {
         ...baseConfig,
         fill: defaultConfig.fill || defaultConfig.stroke,
         pointerLength: defaultConfig.pointerLength,
         pointerWidth: defaultConfig.pointerWidth,
         pointerAtBeginning: false,
         pointerAtEnding: true,
-      });
+      };
     
     case 'double-arrow':
-      return new Konva.Arrow({
+      return {
         ...baseConfig,
         fill: defaultConfig.fill || defaultConfig.stroke,
         pointerLength: defaultConfig.pointerLength,
         pointerWidth: defaultConfig.pointerWidth,
         pointerAtBeginning: true,
         pointerAtEnding: true,
-      });
+      };
     
     default:
-      return new Konva.Line(baseConfig);
+      return baseConfig;
   }
 }
 

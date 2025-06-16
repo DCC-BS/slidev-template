@@ -109,13 +109,7 @@ onMounted(() => {
 <template>
     <div>
         <h3 class="mb-4 text-lg font-semibold">Konva Shape Connector Demo</h3>
-        <!-- <div class="mb-4 text-sm text-gray-600">
-            <p><strong>Red Arrow:</strong> Straight connection (right → left)</p>
-            <p><strong>Blue Line:</strong> Curved connection (top → bottom)</p>
-            <p><strong>Green Double Arrow:</strong> Orthogonal connection (top → left)</p>
-            <p><strong>Purple Dashed Arrow:</strong> Smart connection (auto anchor points)</p>
-        </div> -->
-        <v-stage ref="stageRef" class="bg-gray-200 border" :config="stageConfig">
+        <v-stage ref="stageRef" :config="stageConfig">
             <v-layer>
                 <!-- Rectangle 1 -->
                 <v-rect :x="100" :y="100" :width="150" :height="120" fill="red" stroke="black" strokeWidth="2" />
