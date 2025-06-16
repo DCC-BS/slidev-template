@@ -9,6 +9,9 @@ export interface BlockConfig {
     width: number;
     height: number;
     text: string;
+    scaleX?: number;
+    scaleY?: number;
+    opacity?: number;
     rectConfig?: Partial<RectConfig>;
     textConfig?: Partial<TextConfig>;
 };
@@ -33,6 +36,9 @@ const rectConfg = computed(() => {
         fill: 'lightblue',
         stroke: 'black',
         strokeWidth: 2,
+        scaleX: config.value.scaleX ?? 1,
+        scaleY: config.value.scaleY ?? 1,
+        opacity: config.value.opacity ?? 1,
         ...config.value.rectConfig
     };
 });
@@ -46,6 +52,9 @@ const textConfig = computed(() => {
         height: config.value.height,
         align: 'center',
         verticalAlign: 'middle',
+        scaleX: config.value.scaleX ?? 1,
+        scaleY: config.value.scaleY ?? 1,
+        opacity: config.value.opacity ?? 1,
         ...config.value.textConfig
     };
 });

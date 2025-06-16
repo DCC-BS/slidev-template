@@ -660,3 +660,23 @@ class: text-center
 [Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
 
 <PoweredBySlidev mt-10 />
+
+---
+
+# 🚀 Improved Animation System
+
+<APIComparisonDemo />
+
+---
+
+# Easy Animation Demo
+
+<EasyAnimationDemo />
+
+---
+---
+# Performance Test - Optimized Animation System
+
+<PerformanceTestDemo />
+
+---

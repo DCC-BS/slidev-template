@@ -72,7 +72,7 @@ export function useKonvaAnimation(
     isAnimating.value = false;
   };
 
-  // Animate to a specific step
+  // Optimized animation system with batched updates and reduced reactive overhead
   const animateToStep = (stepIndex: number, forceSkip = false) => {
     if (stepIndex < 0 || stepIndex >= totalSteps.value) return;
     
@@ -116,99 +116,148 @@ export function useKonvaAnimation(
     isAnimating.value = true;
     stepStartTime.value = now;
     
-    // Create custom animations for each target that has this step
-    const newAnimations: any[] = [];
+    // Collect all animations for this step
+    const animations: Array<{
+      target: any;
+      keys: string[];
+      startVals: number[];
+      endVals: number[];
+      diffs: number[];
+      duration: number;
+      delay: number;
+      easing: any;
+      completed: boolean;
+    }> = [];
     
     targets.forEach(target => {
       if (stepIndex < target.steps.length) {
         const step = target.steps[stepIndex];
         
-        // Store starting values
-        const startValues: Record<string, any> = {};
-        const endValues: Record<string, any> = {};
+        // Pre-calculate all values
+        const keys = Object.keys(step.properties);
+        const startVals = keys.map(key => target.target[key]);
+        const endVals = keys.map(key => step.properties[key]);
+        const diffs = keys.map((_, i) => endVals[i] - startVals[i]);
         
-        Object.keys(step.properties).forEach(key => {
-          startValues[key] = target.target[key];
-          endValues[key] = step.properties[key];
+        animations.push({
+          target: target.target,
+          keys,
+          startVals,
+          endVals,
+          diffs,
+          duration: step.duration ?? defaultDuration,
+          delay: step.delay ?? 0,
+          easing: step.easing ?? defaultEasing,
+          completed: false
         });
-
-        // Create custom animation using requestAnimationFrame
-        let startTime: number | null = null;
-        const duration = step.duration ?? defaultDuration;
-        const delay = step.delay ?? 0;
-        const easing = step.easing ?? defaultEasing;
-        let animationId: number | null = null;
-        
-        const animate = (currentTime: number) => {
-          if (!startTime) {
-            startTime = currentTime + delay;
-          }
-          
-          if (currentTime < startTime) {
-            animationId = requestAnimationFrame(animate);
-            return;
-          }
-          
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          
-          // Apply easing function
-          let easedProgress = progress;
-          if (easing && typeof easing === 'function') {
-            // Handle different Konva easing function signatures
-            try {
-              easedProgress = easing(progress, 0, 1, 1);
-            } catch (e) {
-              // Fallback to simple progress if easing fails
-              easedProgress = progress;
-            }
-          }
-          
-          // Interpolate values
-          Object.keys(step.properties).forEach(key => {
-            const startVal = startValues[key];
-            const endVal = endValues[key];
-            target.target[key] = startVal + (endVal - startVal) * easedProgress;
-          });
-          
-          if (progress < 1) {
-            animationId = requestAnimationFrame(animate);
-          } else {
-            // Ensure final values are set exactly
-            Object.assign(target.target, step.properties);
-            
-            // Remove this animation from active list
-            const index = newAnimations.indexOf(animation);
-            if (index > -1) {
-              newAnimations.splice(index, 1);
-            }
-            
-            // If this was the last animation, animation is complete
-            if (newAnimations.length === 0) {
-              isAnimating.value = false;
-            }
-          }
-        };
-        
-        const animation = {
-          id: null as number | null,
-          cancel: () => {
-            if (animationId) {
-              cancelAnimationFrame(animationId);
-            }
-          }
-        };
-        
-        newAnimations.push(animation);
-        
-        // Start the animation
-        animationId = requestAnimationFrame(animate);
-        animation.id = animationId;
       }
     });
 
-    // Store active animations
-    activeTweens.value = newAnimations;
+    if (animations.length === 0) {
+      isAnimating.value = false;
+      currentStep.value = stepIndex;
+      return;
+    }
+
+    // Single RAF loop for all animations - much more efficient!
+    let masterStartTime: number | null = null;
+    let frameId: number | null = null;
+    let lastUpdateTime = 0;
+    const updateThreshold = 32; // ~30fps instead of 60fps for better performance
+    
+    const masterAnimate = (currentTime: number) => {
+      if (!masterStartTime) {
+        masterStartTime = currentTime;
+      }
+      
+      // Throttle updates to reduce reactive overhead - 30fps is smooth enough
+      if (currentTime - lastUpdateTime < updateThreshold) {
+        frameId = requestAnimationFrame(masterAnimate);
+        return;
+      }
+      lastUpdateTime = currentTime;
+      
+      let allCompleted = true;
+      const batchUpdates: Array<{ target: any; updates: Record<string, number> }> = [];
+      
+      // Process all animations in a single loop
+      for (const anim of animations) {
+        if (anim.completed) continue;
+        
+        const elapsed = currentTime - masterStartTime - anim.delay;
+        
+        if (elapsed < 0) {
+          allCompleted = false;
+          continue;
+        }
+        
+        const progress = Math.min(elapsed / anim.duration, 1);
+        
+        // Apply easing
+        let easedProgress = progress;
+        if (anim.easing && typeof anim.easing === 'function') {
+          try {
+            easedProgress = anim.easing(progress, 0, 1, 1);
+          } catch (e) {
+            easedProgress = progress;
+          }
+        }
+        
+        // Prepare batch update for this target
+        const updates: Record<string, number> = {};
+        for (let i = 0; i < anim.keys.length; i++) {
+          updates[anim.keys[i]] = anim.startVals[i] + anim.diffs[i] * easedProgress;
+        }
+        
+        // Add to batch
+        batchUpdates.push({ target: anim.target, updates });
+        
+        if (progress >= 1) {
+          anim.completed = true;
+          // Ensure final values are exact
+          for (let i = 0; i < anim.keys.length; i++) {
+            updates[anim.keys[i]] = anim.endVals[i];
+          }
+        } else {
+          allCompleted = false;
+        }
+      }
+      
+      // Apply all updates in a batch to minimize reactive triggers
+      // Use a microtask to further batch the updates
+      if (batchUpdates.length > 0) {
+        Promise.resolve().then(() => {
+          batchUpdates.forEach(({ target, updates }) => {
+            Object.assign(target, updates);
+          });
+        });
+      }
+      
+      if (allCompleted) {
+        isAnimating.value = false;
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+          frameId = null;
+        }
+      } else {
+        frameId = requestAnimationFrame(masterAnimate);
+      }
+    };
+    
+    // Start the master animation loop
+    frameId = requestAnimationFrame(masterAnimate);
+    
+    // Store cancellation function
+    activeTweens.value = [{
+      id: frameId,
+      cancel: () => {
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+          frameId = null;
+        }
+      }
+    }];
+    
     currentStep.value = stepIndex;
   };
 
