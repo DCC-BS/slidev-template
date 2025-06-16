@@ -13,11 +13,11 @@ const serverHeight = ref(0);
 const apiHeight = ref(0);
 
 const frontendHeight = computed(() => {
-    return clientHeight.value + serverHeight.value + 80;
+    return clientHeight.value + serverHeight.value + 100;
 });
 
 const backendHeight = computed(() => {
-    return apiHeight.value + 40;
+    return apiHeight.value + 60;
 });
 
 // Define our reactive data
@@ -48,7 +48,7 @@ const blocks = computed<BlockConfig[]>(() => [
         width: 130,
         height: serverHeight.value,
         x: 110,
-        y: 270,
+        y: 290,
         text: "Server",
         opacity: serverHeight.value / 120,
     },
@@ -58,15 +58,17 @@ const blocks = computed<BlockConfig[]>(() => [
         x: 500,
         y: 100,
         text: "Backend",
-        scaleX: 1,
-        scaleY: 1,
         opacity: 1,
+        textConfig: {
+            y: 10,
+            verticalAlign: "top"
+        }
     },
     {
         width: 130,
         height: apiHeight.value,
-        x: 500,
-        y: 120,
+        x: 510,
+        y: 140,
         text: "API",
         opacity: apiHeight.value / 120,
     },
@@ -74,18 +76,25 @@ const blocks = computed<BlockConfig[]>(() => [
 
 const connections = computed<ConnectionOptions[]>(() => [
     {
+        fromShape: blocks.value[1],
+        toShape: blocks.value[2],
+        fromAnchor: "bottom",
+        toAnchor: "top",
+        connectionType: "straight",
+        lineType: "double-arrow",
+        config: {
+            opacity: serverHeight.value / 120
+        }
+    },
+    {
         fromShape: blocks.value[2],
-        toShape: blocks.value[3],
+        toShape: blocks.value[4],
         fromAnchor: "right",
         toAnchor: "left",
-        connectionType: "straight",
-        lineType: "arrow",
+        connectionType: "orthogonal",
+        lineType: "double-arrow",
         config: {
-            stroke: "red",
-            strokeWidth: 3,
-            pointerLength: 15,
-            pointerWidth: 12,
-            opacity: serverHeight.value / 120,
+            opacity: apiHeight.value / 120,
         },
     },
 ]);
@@ -128,6 +137,5 @@ function* animationGenerator() {
 
 <template>
     <GeneratorAnimator :generator="animationGenerator" />
-
     <Graphic :blocks="blocks" :connections="connections" />
 </template>
