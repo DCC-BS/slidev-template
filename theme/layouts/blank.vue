@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<InputProps>(), {
         </div>
 
         <div v-if="props.showDataBSLogo" class="absolute bottom-10 right-10 z-10">
-            <img class="w-15" src="/DataBSLogo.svg">
+            <img class="w-15" src="/theme/DataBSLogo.svg">
         </div>
     </div>
 </template>

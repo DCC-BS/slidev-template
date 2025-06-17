@@ -4,10 +4,10 @@ import type { TextConfig } from "konva/lib/shapes/Text";
 import { computed } from "vue";
 
 export interface BlockConfig {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
     text?: string;
     scaleX?: number;
     scaleY?: number;

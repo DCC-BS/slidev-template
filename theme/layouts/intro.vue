@@ -1,8 +1,8 @@
 <template>
   <div class="slidev-layout cover wrapper flex justify-center items-center relative">
     <div class="absolute left-0 right-0 top-0 bottom-0">
-      <img src="/image4.png" alt="Background Image" />
-      <img src="/image3.png" alt="Background Image" />
+      <img src="/theme/image4.png" alt="Background Image" />
+      <img src="/theme/image3.png" alt="Background Image" />
     </div>
 
     <div class="mb-35 z-10 text-center">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="absolute bottom-10 right-10 z-10">
-      <img class="w-15" src="/DataBSLogo.svg">
+      <img class="w-15" src="/theme/DataBSLogo.svg">
     </div>
   </div>
 </template>
