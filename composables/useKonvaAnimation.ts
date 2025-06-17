@@ -1,6 +1,6 @@
 import { useSlideContext } from "@slidev/client";
 import Konva from "konva";
-import { Ref, computed, nextTick, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 export interface AnimationStep {
     duration?: number;

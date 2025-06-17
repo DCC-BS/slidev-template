@@ -7,6 +7,8 @@ import type { BlockConfig } from "./Block.vue";
 import Graphic from "./Graphic.vue";
 import GeneratorAnimator from "./GeneratorAnimator.vue";
 
+const boxHeight = 120;
+
 const clientHeight = ref(0);
 const serverHeight = ref(0);
 
@@ -42,7 +44,7 @@ const blocks = computed<BlockConfig[]>(() => [
         x: 110,
         y: 140,
         text: "Client",
-        opacity: clientHeight.value / 120,
+        opacity: clientHeight.value / boxHeight,
     },
     {
         width: 130,
@@ -50,7 +52,7 @@ const blocks = computed<BlockConfig[]>(() => [
         x: 110,
         y: 290,
         text: "Server",
-        opacity: serverHeight.value / 120,
+        opacity: serverHeight.value / boxHeight,
     },
     {
         height: backendHeight.value,
@@ -70,7 +72,7 @@ const blocks = computed<BlockConfig[]>(() => [
         x: 510,
         y: 140,
         text: "API",
-        opacity: apiHeight.value / 120,
+        opacity: apiHeight.value / boxHeight,
     },
 ]);
 
@@ -83,7 +85,7 @@ const connections = computed<ConnectionOptions[]>(() => [
         connectionType: "straight",
         lineType: "double-arrow",
         config: {
-            opacity: serverHeight.value / 120
+            opacity: serverHeight.value / boxHeight
         }
     },
     {
@@ -94,7 +96,7 @@ const connections = computed<ConnectionOptions[]>(() => [
         connectionType: "orthogonal",
         lineType: "double-arrow",
         config: {
-            opacity: apiHeight.value / 120,
+            opacity: apiHeight.value / boxHeight,
         },
     },
 ]);
@@ -105,7 +107,7 @@ function* animationGenerator() {
     yield step(
         animate(
             clientHeight,
-            { value: 120 },
+            { value: boxHeight },
             {
                 duration: 500,
                 easing: Konva.Easings.BackEaseOut,
@@ -113,7 +115,7 @@ function* animationGenerator() {
         ),
         animate(
             serverHeight,
-            { value: 120 },
+            { value: boxHeight },
             {
                 duration: 500,
                 delay: 500,
@@ -125,7 +127,7 @@ function* animationGenerator() {
     // Step 2: Animate API height with a delay
     yield animate(
         apiHeight,
-        { value: 120 },
+        { value: boxHeight },
         {
             duration: 500,
             delay: 1000,

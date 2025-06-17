@@ -43,12 +43,6 @@ url: https://textmate.uvk8sbswc19.cmp.bs.ch
 
 ---
 ---
-# Simple Animation Test
-
-<SimpleAnimationExample />
-
----
----
 # Welcome to Slidev
 
 Presentation slides for developers

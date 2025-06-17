@@ -1,5 +1,4 @@
 import Konva from "konva";
-import { ref, computed } from "vue";
 import {
     createAnimationStep,
     createAnimationTarget,
@@ -240,10 +239,10 @@ export function useGeneratorAnimation(
             let result = generator.next();
             while (!result.done) {
                 const yielded = result.value;
-                
+
                 // Convert yielded value to AnimationStep
                 let animationStep: AnimationStep;
-                
+
                 if (yielded instanceof AnimationContext) {
                     // Old style: yielding AnimationContext
                     animationStep = yielded.getStep();
@@ -270,11 +269,11 @@ export function useGeneratorAnimation(
                     console.warn("Unknown yielded value:", yielded);
                     animationStep = { animations: [] };
                 }
-                
+
                 if (animationStep.animations.length > 0) {
                     steps.push(animationStep);
                 }
-                
+
                 // Continue with the generator
                 result = generator.next();
             }
@@ -290,7 +289,7 @@ export function useGeneratorAnimation(
         generatorFn: () => AnimationGeneratorFunction,
     ) => {
         const steps = executeGeneratorFunction(generatorFn);
-        
+
         // Collect all unique targets
         const allTargets = new Set<unknown>();
         for (const step of steps) {
@@ -351,12 +350,12 @@ export function useGeneratorAnimation(
                     const resolvedEasing =
                         typeof targetAnimation.options?.easing === "string"
                             ? EasingPresets[
-                                  targetAnimation.options.easing as EasingPreset
-                              ]
+                            targetAnimation.options.easing as EasingPreset
+                            ]
                             : targetAnimation.options?.easing ||
-                              (typeof defaultEasing === "string"
-                                  ? EasingPresets[defaultEasing as EasingPreset]
-                                  : defaultEasing);
+                            (typeof defaultEasing === "string"
+                                ? EasingPresets[defaultEasing as EasingPreset]
+                                : defaultEasing);
 
                     return createAnimationStep(targetAnimation.properties, {
                         duration:
@@ -413,24 +412,24 @@ export function* createAnimationGenerator(): AnimationGeneratorFunction {
 // Simplified preset animation patterns using helper functions
 export const SimpleAnimationPresets = {
     // Slide in from directions
-    slideInFromLeft: (target: unknown, finalX: number, options?: AnimationProps) => 
+    slideInFromLeft: (target: unknown, finalX: number, options?: AnimationProps) =>
         animate(target, { x: finalX }, { ...options, easing: options?.easing || EasingPresets.easeOut }),
 
-    slideInFromRight: (target: unknown, finalX: number, options?: AnimationProps) => 
+    slideInFromRight: (target: unknown, finalX: number, options?: AnimationProps) =>
         animate(target, { x: finalX }, { ...options, easing: options?.easing || EasingPresets.easeOut }),
 
     // Scale animations
-    scaleIn: (target: unknown, options?: AnimationProps) => 
+    scaleIn: (target: unknown, options?: AnimationProps) =>
         scaleTo(target, 1, { ...options, easing: options?.easing || EasingPresets.backOut }),
 
-    scaleOut: (target: unknown, options?: AnimationProps) => 
+    scaleOut: (target: unknown, options?: AnimationProps) =>
         scaleTo(target, 0, { ...options, easing: options?.easing || EasingPresets.easeIn }),
 
     // Effect animations
-    bounce: (target: unknown, options?: AnimationProps) => 
+    bounce: (target: unknown, options?: AnimationProps) =>
         scaleTo(target, 1.1, { duration: 300, easing: EasingPresets.bounceOut, ...options }),
 
-    pulse: (target: unknown, options?: AnimationProps) => 
+    pulse: (target: unknown, options?: AnimationProps) =>
         scaleTo(target, 1.05, { duration: 500, easing: EasingPresets.easeInOut, ...options }),
 };
 
@@ -443,9 +442,9 @@ export const GeneratorAnimationPresets = {
         finalX: number,
         options?: AnimationProps,
     ) => {
-        context.animate(target, { x: finalX }, { 
-            ...options, 
-            easing: options?.easing || EasingPresets.easeOut 
+        context.animate(target, { x: finalX }, {
+            ...options,
+            easing: options?.easing || EasingPresets.easeOut
         });
     },
 
@@ -455,24 +454,24 @@ export const GeneratorAnimationPresets = {
         finalX: number,
         options?: AnimationProps,
     ) => {
-        context.animate(target, { x: finalX }, { 
-            ...options, 
-            easing: options?.easing || EasingPresets.easeOut 
+        context.animate(target, { x: finalX }, {
+            ...options,
+            easing: options?.easing || EasingPresets.easeOut
         });
     },
 
     // Scale animations
     scaleIn: (context: AnimationContext, target: unknown, options?: AnimationProps) => {
-        context.animate(target, { scaleX: 1, scaleY: 1 }, { 
-            ...options, 
-            easing: options?.easing || EasingPresets.backOut 
+        context.animate(target, { scaleX: 1, scaleY: 1 }, {
+            ...options,
+            easing: options?.easing || EasingPresets.backOut
         });
     },
 
     scaleOut: (context: AnimationContext, target: unknown, options?: AnimationProps) => {
-        context.animate(target, { scaleX: 0, scaleY: 0 }, { 
-            ...options, 
-            easing: options?.easing || EasingPresets.easeIn 
+        context.animate(target, { scaleX: 0, scaleY: 0 }, {
+            ...options,
+            easing: options?.easing || EasingPresets.easeIn
         });
     },
 
