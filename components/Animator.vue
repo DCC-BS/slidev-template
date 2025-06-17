@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, shallowRef } from "vue";
+import { computed, onMounted, onUnmounted, ref, shallowRef } from "vue";
 import {
     type AnimationGeneratorFunction,
     useGeneratorAnimation,
@@ -31,6 +31,8 @@ const animationSystem = shallowRef<unknown>(null);
 const currentStep = ref(-1);
 const totalSteps = ref(0);
 const isAnimating = ref(false);
+
+let updateInterval: NodeJS.Timeout | undefined = undefined;
 
 // Throttle the reactive updates to reduce overhead
 let updateScheduled = false;
@@ -73,7 +75,7 @@ onMounted(() => {
         isAnimating.value = system.isAnimating.value;
 
         // Set up a periodic check instead of reactive watching to reduce overhead
-        const updateInterval = setInterval(() => {
+        updateInterval = setInterval(() => {
             const newCurrentStep = system.currentStep.value;
             const newTotalSteps = system.totalSteps.value;
             const newIsAnimating = system.isAnimating.value;
@@ -86,12 +88,11 @@ onMounted(() => {
                 scheduleUpdate();
             }
         }, 50); // Check every 50ms instead of every frame
-
-        // Cleanup on unmount
-        onMounted(() => {
-            return () => clearInterval(updateInterval);
-        });
     }
+});
+
+onUnmounted(() => {
+    clearInterval(updateInterval);
 });
 
 // Expose values to parent component

@@ -5,22 +5,16 @@ import { animate, step } from "../composables/useGeneratorAnimation";
 import type { ConnectionOptions } from "../utils/shapeConnector";
 import type { BlockConfig } from "./Block.vue";
 import Graphic from "./Graphic.vue";
-import GeneratorAnimator from "./GeneratorAnimator.vue";
+import Animator from "./Animator.vue";
 
 const boxHeight = 120;
 
 const clientHeight = ref(0);
 const serverHeight = ref(0);
-
 const apiHeight = ref(0);
 
-const frontendHeight = computed(() => {
-    return clientHeight.value + serverHeight.value + 100;
-});
-
-const backendHeight = computed(() => {
-    return apiHeight.value + 60;
-});
+const frontendHeight = computed(() => clientHeight.value + serverHeight.value + 100);
+const backendHeight = computed(() => apiHeight.value + 60);
 
 // Define our reactive data
 const blocks = computed<BlockConfig[]>(() => [
@@ -101,7 +95,6 @@ const connections = computed<ConnectionOptions[]>(() => [
     },
 ]);
 
-// Simplified generator-based animation function
 function* animationGenerator() {
     // Step 1: Multiple animations happening simultaneously
     yield step(
@@ -138,6 +131,6 @@ function* animationGenerator() {
 </script>
 
 <template>
-    <GeneratorAnimator :generator="animationGenerator" />
+    <Animator :generator="animationGenerator" />
     <Graphic :blocks="blocks" :connections="connections" />
 </template>
