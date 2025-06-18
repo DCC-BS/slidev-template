@@ -24,11 +24,11 @@
     }
 
     h2 {
-        @apply text-3xl;
+        @apply text-5xl font-bold text-cyan-600;
     }
 
     h3 {
-        @apply text-2xl;
+        @apply text-4xl;
     }
 
     h4 {

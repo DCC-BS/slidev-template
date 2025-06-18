@@ -30,35 +30,42 @@ Data Competence Center - DCC
 Tobias Bollinger
 
 ---
+---
+# KI Projekte
+<div class="flex flex-col gap-4">
+  <div>
+    <h2>Berichtgenerator </h2>
+    <img src="/img/Berichtgenerator.png" class="w-[600px]" />
+  </div>
+  <div>
+    <h2>Transcribo </h2>
+    <img src="/img/Transcribo.png" class="w-[800px]" />
+  </div>
+</div>
+
+
+---
 layout: image-right
 image: img/textmate-overview.png
 backgroundSize: contain
 ---
 # Was ist TextMate?
-- Webanwendung für die Korrektur und Validierung von Text
-- Keine Daten werden gespeichert oder nach Aussen weitergegeben
+- Webanwendung zur Korrektur und Validierung von Text
+- Keine Datenspeicherung oder Weitergabe
+- Prototyp, wird laufend weiterentwickelt
 
----
----
-# Was kann Textmate?
-- Grammatikkorrektur: ✅ Erkennt und schlägt Korrekturen für grammatikalische und Rechtschreibfehler vor  
-- Textumformung: 🔄 Bietet alternative Formulierungen mit anpassbarem Stil Publikum und Absicht  
-- Feedback: 📄 Überprüft Texte anhand ausgewählter Referenzdokumente mit PDF-Vorschau  
-- Schnellaktionen: ⚡ Verschiedene Tools zur Texttransformation einschliesslich Zusammenfassung und Formatkonvertierung  
-- Benutzerwörterbuch: 📘 Persönliches Wörterbuch zur Speicherung von Fachvokabular  
-- Multisprachunterstützung: 🌍 Verfügbare in Englisch und Deutsch
-
+## Funktionen
+- ✅ Grammatik- und Rechtschreibkorrektur
+- 🔄 Stil- und Textumformung
+- 📄 Feedback mit PDF-Vorschau
+- ⚡ Schnellaktionen wie Zusammenfassung & Formatkonvertierung
+- 📘 Persönliches Benutzerwörterbuch
+- 🌍 Deutsch & Englisch
 ---
 layout: blank
 ---
 # Demo
-
-<iframe src="https://textmate.uvk8sbswc19.cmp.bs.ch/" class="w-full h-[800px]" />
-
----
----
-<TextMateArchitecture />
-
+<Demo />
 
 ---
 ---
