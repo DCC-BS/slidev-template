@@ -31,7 +31,7 @@ Tobias Bollinger
 
 ---
 ---
-# KI Projekte vom Data Competence Center
+# KI-Projekte vom Data Competence Center
 <div class="flex flex-col gap-4">
   <div>
     <h2>Berichtgenerator </h2>
@@ -50,17 +50,18 @@ image: img/textmate-overview.png
 backgroundSize: contain
 ---
 # Was ist TextMate?
-- Webanwendung zur Korrektur und Validierung von Text
-- Keine Datenspeicherung oder Weitergabe
-- Prototyp, wird laufend weiterentwickelt
+- **Webanwendung** zur Korrektur und Validierung von Texten
+- **Datenschutz**: Keine Datenspeicherung oder -weitergabe
+- **Prototyp**, wird kontinuierlich weiterentwickelt
 
-## Funktionen
-- ✅ Grammatik- und Rechtschreibkorrektur
-- 🔄 Stil- und Textumformung
-- 📄 Feedback mit PDF-Vorschau
-- ⚡ Schnellaktionen wie Zusammenfassung & Formatkonvertierung
-- 📘 Persönliches Benutzerwörterbuch
-- 🌍 Deutsch & Englisch
+## Hauptfunktionen
+- ✅ **Grammatik- und Rechtschreibkorrektur**
+- 🔄 **Stil- und Textumformung**
+- 📄 **Feedback mit Live-PDF-Vorschau**
+- ⚡ **Schnellaktionen**: Zusammenfassung & Formatkonvertierung
+- 📘 **Persönliches Benutzerwörterbuch**
+- 🌍 **Mehrsprachig**: Deutsch & Englisch
+
 ---
 layout: blank
 ---
@@ -73,9 +74,17 @@ additionalClasses: "text-center"
 ---
 # Fragen?
 ::left::
-Verfügbar unter:
+**Verfügbar unter:**
+
 https://textmate.uvk8sbswc19.cmp.bs.ch
 
 <img src="/img/qrCode.png" class="w-200" />
 ::right::
-Kontaktieren Sie bei Fragen zum Einsatz von KI das Data Competence Center (DCC) des Statistischen Amtes unter dcc@bs.ch
+**Kontakt für KI-Fragen:**
+
+Data Competence Center (DCC)  
+Statistisches Amt
+
+📧 dcc@bs.ch
+
+*Wir unterstützen Sie gerne beim Einsatz von KI-Tools!*

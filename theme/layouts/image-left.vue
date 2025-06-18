@@ -18,6 +18,10 @@ const props = defineProps<InputProps>();
                 <slot />
             </div>
         </div>
+
+        <div class="absolute right-0 right-1 bottom-20 z-0">
+            <img src="/theme/image5.png" alt="Background Image" />
+        </div>
         <div class="absolute bottom-10 right-10 z-10">
             <img class="w-15" src="/theme/DataBSLogo.svg">
         </div>
