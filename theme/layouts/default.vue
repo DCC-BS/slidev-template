@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 </script>
 
 <template>
-    <div class="slidev-layout relative bg-white z-2">
+    <div class="slidev-layout relative z-2">
         <div class="absolute right-0 right-1 bottom-20 z-0">
             <img src="/theme/image5.png" alt="Background Image" />
         </div>

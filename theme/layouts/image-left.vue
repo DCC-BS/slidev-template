@@ -9,7 +9,7 @@ const props = defineProps<InputProps>();
 </script>
 
 <template>
-    <div class="slidev-layout relative bg-white">
+    <div class="slidev-layout relative">
         <div class="flex justify-stretch gap-2">
             <div>
                 <img :src="props.image" alt="Right Image" class="w-full h-auto object-cover" />
@@ -17,6 +17,9 @@ const props = defineProps<InputProps>();
             <div>
                 <slot />
             </div>
+        </div>
+        <div class="absolute bottom-10 right-10 z-10">
+            <img class="w-15" src="/theme/DataBSLogo.svg">
         </div>
     </div>
 </template>

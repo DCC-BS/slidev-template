@@ -28,11 +28,19 @@ function* animation() {
         },
     )
 
-    yield animate(
-        transformOriginX,
-        {
-            value: 0,
-        },
+    yield step(
+        animate(
+            transformOriginY,
+            {
+                value: 50,
+            },
+        ),
+        animate(
+            transformScale,
+            {
+                value: 1,
+            },
+        ),
     )
 }
 

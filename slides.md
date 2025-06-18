@@ -31,7 +31,7 @@ Tobias Bollinger
 
 ---
 ---
-# KI Projekte
+# KI Projekte vom Data Competence Center
 <div class="flex flex-col gap-4">
   <div>
     <h2>Berichtgenerator </h2>
@@ -68,18 +68,14 @@ layout: blank
 <Demo />
 
 ---
+layout: two-cols
+additionalClasses: "text-center"
 ---
-# Textmate
-
-<br>
-
+# Fragen?
+::left::
 Verfügbar unter:
 https://textmate.uvk8sbswc19.cmp.bs.ch
 
 <img src="/img/qrCode.png" class="w-200" />
-
----
-layout: intro
----
-#  Fragen?
-## Kontaktieren Sie bei Fragen zum Einsatz von KI das Data Competence Center (DCC) des Statistischen Amtes unter dcc@bs.ch
+::right::
+Kontaktieren Sie bei Fragen zum Einsatz von KI das Data Competence Center (DCC) des Statistischen Amtes unter dcc@bs.ch

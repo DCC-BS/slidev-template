@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 </script>
 
 <template>
-    <div class="slidev-layout relative bg-white">
+    <div class="slidev-layout relative">
         <div class="my-auto">
             <slot />
         </div>

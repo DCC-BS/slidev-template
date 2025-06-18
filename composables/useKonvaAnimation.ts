@@ -102,16 +102,167 @@ export function useKonvaAnimation(
             return;
         }
 
-        // If going backwards, apply the target step state immediately
+        // If going backwards, animate in reverse
         if (stepIndex < currentStep.value) {
-            // Reset to initial state
-            initializeTargets();
-            // Apply all steps up to the target step instantly
-            for (let i = 0; i <= stepIndex; i++) {
-                applyStepEndState(i);
-            }
-            currentStep.value = stepIndex;
+            // For reverse animation, we animate from current state to target state
+            isAnimating.value = true;
             stepStartTime.value = now;
+
+            // Collect reverse animations
+            const reverseAnimations: Array<{
+                target: any;
+                keys: string[];
+                startVals: number[];
+                endVals: number[];
+                diffs: number[];
+                duration: number;
+                delay: number;
+                easing: any;
+                completed: boolean;
+            }> = [];
+
+            // Calculate what the target state should be
+            const targetState: Record<string, Record<string, any>> = {};
+            
+            // First, determine the end state for the target step
+            targets.forEach((target, targetIndex) => {
+                targetState[targetIndex] = { ...target.initialState };
+                
+                // Apply all steps up to the target step
+                for (let i = 0; i <= stepIndex; i++) {
+                    if (i < target.steps.length) {
+                        Object.assign(targetState[targetIndex], target.steps[i].properties);
+                    }
+                }
+            });
+
+            // Create reverse animations from current state to target state
+            targets.forEach((target, targetIndex) => {
+                const keys = Object.keys(targetState[targetIndex]);
+                const startVals = keys.map((key) => target.target[key]);
+                const endVals = keys.map((key) => targetState[targetIndex][key]);
+                const diffs = keys.map((_, i) => endVals[i] - startVals[i]);
+
+                // Use the duration from the step we're moving away from
+                const sourceStepIndex = Math.min(currentStep.value, target.steps.length - 1);
+                const sourceStep = sourceStepIndex >= 0 ? target.steps[sourceStepIndex] : null;
+
+                reverseAnimations.push({
+                    target: target.target,
+                    keys,
+                    startVals,
+                    endVals,
+                    diffs,
+                    duration: sourceStep?.duration ?? defaultDuration,
+                    delay: 0, // No delay for reverse animations
+                    easing: defaultEasing, // Use default easing for reverse
+                    completed: false,
+                });
+            });
+
+            // Use the same animation system but for reverse
+            if (reverseAnimations.length === 0) {
+                isAnimating.value = false;
+                currentStep.value = stepIndex;
+                return;
+            }
+
+            // Single RAF loop for reverse animations
+            let masterStartTime: number | null = null;
+            let frameId: number | null = null;
+            let lastUpdateTime = 0;
+            const updateThreshold = 32;
+
+            const masterAnimate = (currentTime: number) => {
+                if (!masterStartTime) {
+                    masterStartTime = currentTime;
+                }
+
+                if (currentTime - lastUpdateTime < updateThreshold) {
+                    frameId = requestAnimationFrame(masterAnimate);
+                    return;
+                }
+                lastUpdateTime = currentTime;
+
+                let allCompleted = true;
+                const batchUpdates: Array<{
+                    target: any;
+                    updates: Record<string, number>;
+                }> = [];
+
+                for (const anim of reverseAnimations) {
+                    if (anim.completed) continue;
+
+                    const elapsed = currentTime - masterStartTime - anim.delay;
+
+                    if (elapsed < 0) {
+                        allCompleted = false;
+                        continue;
+                    }
+
+                    const progress = Math.min(elapsed / anim.duration, 1);
+
+                    let easedProgress = progress;
+                    if (anim.easing && typeof anim.easing === "function") {
+                        try {
+                            easedProgress = anim.easing(progress, 0, 1, 1);
+                        } catch (e) {
+                            easedProgress = progress;
+                        }
+                    }
+
+                    const updates: Record<string, number> = {};
+                    for (let i = 0; i < anim.keys.length; i++) {
+                        updates[anim.keys[i]] =
+                            anim.startVals[i] + anim.diffs[i] * easedProgress;
+                    }
+
+                    batchUpdates.push({ target: anim.target, updates });
+
+                    if (progress >= 1) {
+                        anim.completed = true;
+                        for (let i = 0; i < anim.keys.length; i++) {
+                            updates[anim.keys[i]] = anim.endVals[i];
+                        }
+                    } else {
+                        allCompleted = false;
+                    }
+                }
+
+                if (batchUpdates.length > 0) {
+                    Promise.resolve().then(() => {
+                        batchUpdates.forEach(({ target, updates }) => {
+                            Object.assign(target, updates);
+                        });
+                    });
+                }
+
+                if (allCompleted) {
+                    isAnimating.value = false;
+                    if (frameId) {
+                        cancelAnimationFrame(frameId);
+                        frameId = null;
+                    }
+                } else {
+                    frameId = requestAnimationFrame(masterAnimate);
+                }
+            };
+
+            frameId = requestAnimationFrame(masterAnimate);
+
+            activeTweens.value = [
+                {
+                    id: frameId,
+                    cancel: () => {
+                        if (frameId) {
+                            cancelAnimationFrame(frameId);
+                            frameId = null;
+                        }
+                    },
+                },
+            ];
+
+            currentStep.value = stepIndex;
             return;
         }
 
@@ -290,13 +441,21 @@ export function useKonvaAnimation(
                 // Reset to initial state
                 initializeTargets();
                 currentStep.value = -1;
-            } else {
-                const targetStep = Math.min(
-                    newClicks - 1,
-                    totalSteps.value - 1,
-                );
-                animateToStep(targetStep);
+                return;
             }
+
+            const targetStep = Math.min(newClicks - 1, totalSteps.value - 1);
+            const currentStepValue = currentStep.value;
+            const clickDifference = Math.abs(newClicks - (oldClicks || 0));
+
+            // If click difference is more than 1, skip animation and apply state directly
+            if (clickDifference > 1) {
+                animateToStep(targetStep, true); // Force skip
+                return;
+            }
+
+            // For single step changes, animate normally (forward or reverse)
+            animateToStep(targetStep);
         },
         { immediate: true },
     );
