@@ -13,6 +13,8 @@
 
     p,
     ul,
+    svg,
+    a,
     table {
         font-size: 2rem;
         line-height: 1.5;

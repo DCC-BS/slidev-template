@@ -50,7 +50,7 @@ image: img/textmate-overview.png
 backgroundSize: contain
 ---
 # Was ist TextMate?
-- **Webanwendung** zur Korrektur und Validierung von Texten
+- **Webanwendung** zur Korrektur und Umschreiben von Texten
 - **Datenschutz**: Keine Datenspeicherung oder -weitergabe
 - **Prototyp**, wird kontinuierlich weiterentwickelt
 
@@ -78,7 +78,11 @@ additionalClasses: "text-center"
 
 https://textmate.uvk8sbswc19.cmp.bs.ch
 
-<img src="/img/qrCode.png" class="w-200" />
+**<fa6-brands-github /> Source Code unter:**
+
+https://github.com/DCC-BS
+
+<img src="/img/qrCode.png" class="w-180 m-auto" />
 ::right::
 **Kontakt für KI-Fragen:**
 

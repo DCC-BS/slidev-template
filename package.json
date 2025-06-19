@@ -8,6 +8,7 @@
         "export": "slidev export"
     },
     "dependencies": {
+        "@iconify-json/fa6-brands": "^1.2.5",
         "@slidev/cli": "^51.8.1",
         "@slidev/theme-default": "latest",
         "konva": "^9.3.20",
