@@ -1,6 +1,7 @@
 ---
 # You can also start simply with 'default'
 theme: ./theme
+colorSchema: light
 fonts:
   # basically the text
   sans: Arial
