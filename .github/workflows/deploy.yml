@@ -40,11 +40,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build with Slidev
-        run: npm run build
-        env:
-          NODE_ENV: production
-          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: Install Slidev CLI
+        run: npm i -g @slidev/cli
+
+      - name: Build
+        run: slidev build --base /${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
