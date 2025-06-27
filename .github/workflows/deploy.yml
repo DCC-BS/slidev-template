@@ -1,10 +1,16 @@
 name: Deploy Slidev to GitHub Pages
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 on:
   push:
     branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  # Remove pull_request trigger to avoid unnecessary deployments
+  workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -36,6 +42,9 @@ jobs:
 
       - name: Build with Slidev
         run: npm run build
+        env:
+          NODE_ENV: production
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -44,6 +53,8 @@ jobs:
 
   # Deployment job
   deploy:
+    # Only deploy on push to main/master, not on PRs
+    if: github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,9 +65,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
