@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { animate, step } from "../composables/useGeneratorAnimation";
-import Animator from './Animator.vue';
-
+import { animate, step } from "slidev-addon-animations";
 
 const transformScale = ref(1);
 const transformOriginX = ref(0);
@@ -14,36 +12,15 @@ const iFrameStyle = computed(() => ({
 }));
 
 function* animation() {
-    yield animate(
-        transformScale,
-        {
-            value: 1.5,
-        },
-    )
+    yield animate(transformScale, 1.5);
 
-    yield animate(
-        transformOriginX,
-        {
-            value: 100,
-        },
-    )
+    yield animate(transformOriginX, 100);
 
     yield step(
-        animate(
-            transformOriginY,
-            {
-                value: 50,
-            },
-        ),
-        animate(
-            transformScale,
-            {
-                value: 1,
-            },
-        ),
+        animate(transformOriginY, 50),
+        animate(transformScale, 1),
     )
 }
-
 </script>
 
 

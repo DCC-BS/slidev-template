@@ -11,9 +11,9 @@
         "@iconify-json/fa6-brands": "^1.2.5",
         "@slidev/cli": "^51.8.1",
         "@slidev/theme-default": "latest",
-        "konva": "^9.3.20",
-        "vue": "^3.5.16",
-        "vue-konva": "^3.2.1"
+        "slidev-addon-animations": "git+https://github.com/DCC-BS/slidev-addon-animations.git",
+        "slidev-theme-dcc-bs": "git+https://github.com/DCC-BS/slidev-theme-dcc-bs.git#v0.0.1",
+        "vue": "^3.5.17"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4"

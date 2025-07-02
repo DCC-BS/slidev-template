@@ -1,6 +1,8 @@
 ---
 # You can also start simply with 'default'
-theme: ./theme
+theme: dcc-bs
+addons:
+  - slidev-addon-animations
 colorSchema: light
 fonts:
   # basically the text
